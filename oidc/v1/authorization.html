@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport"
+     content="width=320,
+        height=480,
+        initial-scale=1.0,
+        minimum-scale=1.0,
+        maximum-scale=2.0,
+        user-scalable=yes" />
+
+  <title>Authz</title>
+  <style>
+    .container {
+      height: 300px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    button {
+      margin: 12px;
+    }
+    div {
+      text-align: center;
+    }
+    span {
+      font-size: 12px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div>
+      <br>
+      <span>アプリがリソースへのアクセス許可を求めています。</span>
+      <br>
+      <button onclick="success();">はい</button>
+      <button onclick="failer();">いいえ</button>
+    </div>
+  </div>
+</body>
+
+<script>
+let baseUrl = decodeURIComponent(location.search.replace('?', '').split('&').map(x => x.split('=')).filter(x => x[0] == 'redirect_uri')[0][1]);
+let state = location.search.replace('?', '').split('&').map(x => x.split('=')).filter(x => x[0] == 'state')[0][1];
+
+function success() {
+  location.replace(baseUrl + '?code=1234&state=' + state);
+}
+function failer() {
+  location.replace(baseUrl + '?error=access_denied&state=' + state);
+}
+</script>
+
+</html>
